@@ -1,51 +1,48 @@
 package com.engineerstech.euphoticlabs.ui.utils
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.NavigationRailItemDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.engineerstech.euphoticlabs.ui.home.MockData.items
+import com.engineerstech.euphoticlabs.ui.home.MockData.serviceItems
 import com.engineerstech.euphoticlabs.ui.navigation.LocalNavigationProvider
 import com.engineerstech.euphoticlabs.ui.navigation.Routes
 import com.engineerstech.euphoticlabs.ui.theme.PrimaryColor
 
-
 @Composable
 fun SideBarWithScreen() {
     val navController = LocalNavigationProvider.current
-
-    val items = listOf(
-        SideBarItem("Home", Icons.Filled.Home, Icons.Outlined.Home),
-        SideBarItem("Reheat", Icons.Filled.History, Icons.Outlined.History),
-        SideBarItem("Preset", Icons.Filled.List, Icons.Outlined.List),
-        SideBarItem("Copilot", Icons.Filled.Restaurant, Icons.Outlined.Restaurant),
-        SideBarItem("Flavour", Icons.Filled.ShoppingBasket, Icons.Outlined.ShoppingBasket),
-        SideBarItem("Care Mode", Icons.Filled.MedicalServices, Icons.Outlined.MedicalServices),
-        SideBarItem("Support", Icons.Filled.Headset, Icons.Outlined.Headset)
-    )
 
     var selectedIndex by remember { mutableIntStateOf(0) }
 
     NavigationRail(
         modifier = Modifier
             .fillMaxHeight()
-            .width(80.dp),
+            .width(90.dp),
         containerColor = Color.White,
-        header = {
-            Spacer(modifier = Modifier.height(20.dp))
-        }
     ) {
         items.forEachIndexed { index, item ->
-            val isSelected = selectedIndex == index
-            NavigationRailItem(
-                selected = isSelected,
+            SideBarNavigationItem(
+                item = item,
+                isSelected = selectedIndex == index,
                 onClick = {
                     selectedIndex = index
                     if (index == 0) {
@@ -53,32 +50,59 @@ fun SideBarWithScreen() {
                             launchSingleTop = true
                         }
                     }
-                },
-                icon = {
-                    Icon(
-                        if (isSelected) item.selectedIcon else item.unselectedIcon,
-                        contentDescription = item.label,
-                        modifier = Modifier.size(24.dp)
-                    )
-                },
-                label = {
-                    Text(
-                        text = item.label,
-                        fontSize = 10.sp,
-                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
-                    )
-                },
-                alwaysShowLabel = true,
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = PrimaryColor,
-                    selectedTextColor = PrimaryColor,
-                    unselectedIconColor = Color.Gray,
-                    unselectedTextColor = Color.Gray,
-                    indicatorColor = Color.Transparent
-                )
+                }
+            )
+        }
+
+        HorizontalDivider(modifier = Modifier.padding(20.dp))
+
+        serviceItems.forEachIndexed { index, item ->
+            val serviceIndex = items.size + index
+
+            SideBarNavigationItem(
+                item = item,
+                isSelected = selectedIndex == serviceIndex,
+                onClick = {
+                    selectedIndex = serviceIndex
+                }
             )
         }
     }
+
+}
+
+@Composable
+fun SideBarNavigationItem(
+    item: SideBarItem,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    NavigationRailItem(
+        selected = isSelected,
+        onClick = onClick,
+        icon = {
+            Icon(
+                imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
+                contentDescription = item.label,
+                modifier = Modifier.size(24.dp)
+            )
+        },
+        label = {
+            Text(
+                text = item.label,
+                fontSize = 10.sp,
+                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+            )
+        },
+        alwaysShowLabel = true,
+        colors = NavigationRailItemDefaults.colors(
+            selectedIconColor = PrimaryColor,
+            selectedTextColor = PrimaryColor,
+            unselectedIconColor = Color.Gray,
+            unselectedTextColor = Color.Gray,
+            indicatorColor = Color.Transparent
+        )
+    )
 }
 
 data class SideBarItem(

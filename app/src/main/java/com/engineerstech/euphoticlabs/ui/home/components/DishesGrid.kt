@@ -17,18 +17,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.engineerstech.euphoticlabs.R
 import com.engineerstech.euphoticlabs.domain.model.DishModel
 
 @Composable
 fun DishesGrid(dishes: List<DishModel>) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp
+    val columns = if (screenWidth >= 900) 4 else if (screenWidth >= 600) 3 else 2
+
     Column(modifier = Modifier.padding(16.dp)) {
-        dishes.chunked(4).forEach { rowDishes ->
+        dishes.chunked(columns).forEach { rowDishes ->
             Row(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -39,7 +46,7 @@ fun DishesGrid(dishes: List<DishModel>) {
                     }
                 }
                 // Fill remaining space if row is not full
-                repeat(4 - rowDishes.size) {
+                repeat(columns - rowDishes.size) {
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }
@@ -96,7 +103,7 @@ private fun GridDishCard(dish: DishModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFFFB400), modifier = Modifier.size(12.dp))
-                        Text("4.0", fontSize = 11.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 2.dp))
+                        Text(stringResource(R.string.grid_rating), fontSize = 11.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 2.dp))
                     }
                 }
             }
@@ -115,12 +122,12 @@ private fun GridDishCard(dish: DishModel) {
             
             Spacer(modifier = Modifier.height(10.dp))
             
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                 Icon(Icons.Default.Timer, contentDescription = null, modifier = Modifier.size(12.dp), tint = Color.Gray)
                 Text(dish.Time, fontSize = 11.sp, color = Color.Gray, modifier = Modifier.padding(start = 4.dp))
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(Icons.Default.SignalCellularAlt, contentDescription = null, modifier = Modifier.size(12.dp), tint = Color.Gray)
-                Text("Difficult", fontSize = 11.sp, color = Color.Gray, modifier = Modifier.padding(start = 4.dp))
+                Text(stringResource(R.string.difficult), fontSize = 11.sp, color = Color.Gray, modifier = Modifier.padding(start = 4.dp))
             }
         }
     }

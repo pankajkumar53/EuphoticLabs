@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.engineerstech.euphoticlabs.ui.home.MockData
 import com.engineerstech.euphoticlabs.ui.theme.PrimaryColor
 
 @Composable
@@ -27,18 +28,6 @@ fun IngredientsSection(
     selectedCategory: String?,
     onCategorySelect: (String) -> Unit
 ) {
-    // Mapping categories to some sample images (In production, these would come from API or a local map)
-    val categoryImageMap = mapOf(
-        "Eggs" to "https://img.freepik.com/free-photo/eggs-basket-isolated-white-background_1232-1563.jpg",
-        "Chicken" to "https://img.freepik.com/free-photo/raw-chicken-legs-white-background_1232-4112.jpg",
-        "Palak" to "https://img.freepik.com/free-photo/fresh-spinach-isolated-white-background_1232-1560.jpg",
-        "Raagi" to "https://img.freepik.com/free-photo/ragi-flour-bowl-with-ragi-seeds-isolated-white_466689-72283.jpg",
-        "Tofu" to "https://img.freepik.com/free-photo/white-tofu-white-background_1232-1555.jpg",
-        "Rajma" to "https://img.freepik.com/free-photo/red-kidney-beans-isolated-white-background_1232-1551.jpg",
-        "Cauliflower" to "https://img.freepik.com/free-photo/fresh-cauliflower-isolated-white-background_1232-1557.jpg",
-        "Pumpkin" to "https://img.freepik.com/free-photo/pumpkin-isolated-white-background_1232-1554.jpg"
-    )
-
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 16.dp),
@@ -58,7 +47,7 @@ fun IngredientsSection(
                     modifier = Modifier.size(64.dp)
                 ) {
                     AsyncImage(
-                        model = categoryImageMap[category] ?: "https://cdn-icons-png.flaticon.com/512/706/706164.png",
+                        model = MockData.categoryImageMap[category] ?: "https://cdn-icons-png.flaticon.com/512/706/706164.png",
                         contentDescription = category,
                         modifier = Modifier
                             .fillMaxSize()

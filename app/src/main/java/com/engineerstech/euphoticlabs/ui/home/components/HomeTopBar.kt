@@ -14,15 +14,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.engineerstech.euphoticlabs.R
 
 @Composable
 fun HomeTopBar(
     searchQuery: String,
     onSearchChange: (String) -> Unit
 ) {
+    val configuration = LocalConfiguration.current
+    val isTablet = configuration.screenWidthDp >= 600
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,7 +38,7 @@ fun HomeTopBar(
         OutlinedTextField(
             value = searchQuery,
             onValueChange = onSearchChange,
-            placeholder = { Text("Look up dishes", fontSize = 14.sp, color = Color.Gray) },
+            placeholder = { Text(stringResource(R.string.search_placeholder), fontSize = 14.sp, color = Color.Gray) },
             modifier = Modifier
                 .weight(1f)
                 .height(48.dp),
@@ -54,13 +60,16 @@ fun HomeTopBar(
             singleLine = true
         )
         
-        Spacer(modifier = Modifier.width(12.dp))
-        
-        TopBarActionIcons()
-        
-        Spacer(modifier = Modifier.width(12.dp))
-        
-        SystemActionIcons()
+        if (isTablet) {
+            Spacer(modifier = Modifier.width(12.dp))
+            TopBarActionIcons()
+            Spacer(modifier = Modifier.width(12.dp))
+            SystemActionIcons()
+        } else {
+            IconButton(onClick = { }) {
+                Icon(Icons.Outlined.Notifications, contentDescription = null)
+            }
+        }
     }
 }
 

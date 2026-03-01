@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">Euphotic Labs</string>
+    <string name="search_placeholder">Look up dishes</string>
+    <string name="recommended">Recommended</string>
+    <string name="favourites">Favourites</string>
+    <string name="previously_cooked">Previously Cooked</string>
+    <string name="dish">Dish</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="yesterday_time">Yesterday - 4:33 pm</string>
+    <string name="rate_this_dish">Rate This Dish</string>
+    <string name="sort">Sort</string>
+    <string name="quick_recipes">Quick Recipes</string>
+    <string name="cuisines">Cuisines</string>
+    <string name="diet_type">Diet Type</string>
+    <string name="easy">Easy</string>
+    <string name="difficult">Difficult</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="rating_placeholder">4.5 (50+)</string>
+    <string name="grid_rating">4.0</string>
+    <string name="home">Home</string>
+    <string name="reheat">Reheat</string>
+    <string name="preset">Preset</string>
+    <string name="copilot">Copilot</string>
+    <string name="flavour">Flavour</string>
+    <string name="care_mode">Care Mode</string>
+    <string name="support">Support</string>
 </resources>
