@@ -10,7 +10,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.engineerstech.euphoticlabs.R
 import com.engineerstech.euphoticlabs.data.resource.State
 import com.engineerstech.euphoticlabs.domain.model.DishModel
 import com.engineerstech.euphoticlabs.ui.home.components.*
@@ -39,6 +41,7 @@ fun HomeScreen() {
             is State.Loading -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
+
             is State.Error -> {
                 Text(
                     text = (allDishesState as State.Error).message,
@@ -46,6 +49,7 @@ fun HomeScreen() {
                     color = Color.Red
                 )
             }
+
             is State.Success -> {
                 val dishes = (allDishesState as State.Success<List<DishModel>>).data
                 HomeContent(
@@ -60,6 +64,7 @@ fun HomeScreen() {
                     onCategorySelect = { homeViewModel.onCategorySelect(it) }
                 )
             }
+
             else -> {}
         }
     }
@@ -86,26 +91,31 @@ fun HomeContent(
             searchQuery = searchQuery,
             onSearchChange = onSearchChange
         )
-        
+
         RecommendedSection(allDishes.take(10))
-        
+
         PreviouslyCookedSection(allDishes.takeLast(5))
-        
-        DishIngredientToggle(
-            isDishSelected = isDishToggleSelected,
+
+        AppToggle(
+            firstLabel = stringResource(R.string.dish),
+            secondLabel = stringResource(R.string.ingredients),
+            isFirstSelected = isDishToggleSelected,
             onToggleChange = onToggleChange
         )
-        
+
         IngredientsSection(
             categories = categories,
             selectedCategory = selectedCategory,
             onCategorySelect = onCategorySelect
         )
-        
+
         FiltersSection()
-        
-        DishesGrid(filteredDishes)
-        
+
+        DishSection(
+            dishes = filteredDishes,
+            layoutType = DishLayoutType.GRID
+        )
+
         Spacer(modifier = Modifier.height(32.dp))
     }
 }

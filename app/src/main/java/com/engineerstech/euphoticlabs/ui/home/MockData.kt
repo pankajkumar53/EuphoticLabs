@@ -17,8 +17,6 @@ import androidx.compose.material.icons.outlined.SoupKitchen
 import androidx.compose.material.icons.outlined.Tv
 import com.engineerstech.euphoticlabs.ui.utils.SideBarItem
 
-data class IngredientMock(val name: String, val imageUrl: String)
-
 object MockData {
     val categoryImageMap = mapOf(
         "Eggs" to "https://img.freepik.com/free-photo/eggs-basket-isolated-white-background_1232-1563.jpg",
@@ -29,14 +27,6 @@ object MockData {
         "Rajma" to "https://img.freepik.com/free-photo/red-kidney-beans-isolated-white-background_1232-1551.jpg",
         "Cauliflower" to "https://img.freepik.com/free-photo/fresh-cauliflower-isolated-white-background_1232-1557.jpg",
         "Pumpkin" to "https://img.freepik.com/free-photo/pumpkin-isolated-white-background_1232-1554.jpg"
-    )
-
-    val filterList = listOf(
-        "Sort",
-        "Previously Cooked",
-        "Quick Recipes",
-        "Cuisines",
-        "Diet Type"
     )
 
     // SideBar NavigationRail Item

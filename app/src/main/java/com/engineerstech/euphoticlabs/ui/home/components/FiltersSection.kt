@@ -32,9 +32,11 @@ fun FiltersSection() {
         FilterItem("Cuisines", Icons.Default.RestaurantMenu),
         FilterItem("Diet Type", Icons.Default.FilterList)
     )
-    
+
     LazyRow(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -43,8 +45,20 @@ fun FiltersSection() {
                 selected = false,
                 onClick = {},
                 label = { Text(filter.name, fontSize = 13.sp) },
-                leadingIcon = { Icon(filter.icon, contentDescription = null, modifier = Modifier.size(16.dp)) },
-                trailingIcon = { Icon(Icons.Default.ArrowDropDown, null, modifier = Modifier.size(18.dp)) },
+                leadingIcon = {
+                    Icon(
+                        filter.icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp)
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        Icons.Default.ArrowDropDown,
+                        null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFFF8F8F8),
                     labelColor = Color.DarkGray,
