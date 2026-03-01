@@ -19,12 +19,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.engineerstech.euphoticlabs.ui.home.MockData
+import com.engineerstech.euphoticlabs.ui.home.CategoryItem
 import com.engineerstech.euphoticlabs.ui.theme.PrimaryColor
 
 @Composable
 fun IngredientsSection(
-    categories: List<String>,
+    categories: List<CategoryItem>,
     selectedCategory: String?,
     onCategorySelect: (String) -> Unit
 ) {
@@ -33,13 +33,13 @@ fun IngredientsSection(
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(categories) { category ->
-            val isSelected = selectedCategory == category
+        items(categories) { categoryItem ->
+            val isSelected = selectedCategory == categoryItem.name
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .width(80.dp)
-                    .clickable { onCategorySelect(category) }
+                    .clickable { onCategorySelect(categoryItem.name) }
             ) {
                 Surface(
                     shape = CircleShape,
@@ -47,8 +47,8 @@ fun IngredientsSection(
                     modifier = Modifier.size(64.dp)
                 ) {
                     AsyncImage(
-                        model = MockData.categoryImageMap[category] ?: "https://cdn-icons-png.flaticon.com/512/706/706164.png",
-                        contentDescription = category,
+                        model = categoryItem.imageUrl,
+                        contentDescription = categoryItem.name,
                         modifier = Modifier
                             .fillMaxSize()
                             .clip(CircleShape)
@@ -57,7 +57,7 @@ fun IngredientsSection(
                     )
                 }
                 Text(
-                    text = category,
+                    text = categoryItem.name,
                     fontSize = 12.sp,
                     modifier = Modifier.padding(top = 8.dp),
                     textAlign = TextAlign.Center,

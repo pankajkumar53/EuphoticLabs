@@ -4,6 +4,21 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.FormatListBulleted
+import androidx.compose.material.icons.automirrored.outlined.FormatListBulleted
+import androidx.compose.material.icons.filled.Headset
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Microwave
+import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material.icons.filled.SoupKitchen
+import androidx.compose.material.icons.filled.Tv
+import androidx.compose.material.icons.outlined.Headset
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Microwave
+import androidx.compose.material.icons.outlined.Restaurant
+import androidx.compose.material.icons.outlined.SoupKitchen
+import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
@@ -21,8 +36,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.engineerstech.euphoticlabs.ui.home.MockData.items
-import com.engineerstech.euphoticlabs.ui.home.MockData.serviceItems
 import com.engineerstech.euphoticlabs.ui.navigation.LocalNavigationProvider
 import com.engineerstech.euphoticlabs.ui.navigation.Routes
 import com.engineerstech.euphoticlabs.ui.theme.PrimaryColor
@@ -109,4 +122,16 @@ data class SideBarItem(
     val label: String,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector
+)
+
+val items = listOf(
+    SideBarItem("Home", Icons.Filled.Home, Icons.Outlined.Home),
+    SideBarItem("Reheat", Icons.Filled.Microwave, Icons.Outlined.Microwave),
+    SideBarItem("Preset",Icons.AutoMirrored.Filled.FormatListBulleted,Icons.AutoMirrored.Outlined.FormatListBulleted),
+    SideBarItem("Copilot", Icons.Filled.Restaurant, Icons.Outlined.Restaurant),
+    SideBarItem("Flavour", Icons.Filled.SoupKitchen, Icons.Outlined.SoupKitchen)
+)
+val serviceItems = listOf(
+    SideBarItem("Care Mode", Icons.Filled.Tv, Icons.Outlined.Tv),
+    SideBarItem("Support", Icons.Filled.Headset, Icons.Outlined.Headset)
 )

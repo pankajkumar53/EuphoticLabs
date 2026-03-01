@@ -20,23 +20,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.engineerstech.euphoticlabs.R
 
 @Composable
 fun FiltersSection() {
     val filters = listOf(
-        FilterItem("Sort", Icons.Default.Sort),
-        FilterItem("Previously Cooked", Icons.Default.History),
-        FilterItem("Quick Recipes", Icons.Default.Timer),
-        FilterItem("Cuisines", Icons.Default.RestaurantMenu),
-        FilterItem("Diet Type", Icons.Default.FilterList)
+        FilterItem(stringResource(R.string.sort), Icons.Default.Sort),
+        FilterItem(stringResource(R.string.previously_cooked), Icons.Default.History),
+        FilterItem(stringResource(R.string.quick_recipes), Icons.Default.Timer),
+        FilterItem(stringResource(R.string.cuisines), Icons.Default.RestaurantMenu),
+        FilterItem(stringResource(R.string.diet_type), Icons.Default.FilterList)
     )
-
+    
     LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -45,20 +45,8 @@ fun FiltersSection() {
                 selected = false,
                 onClick = {},
                 label = { Text(filter.name, fontSize = 13.sp) },
-                leadingIcon = {
-                    Icon(
-                        filter.icon,
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp)
-                    )
-                },
-                trailingIcon = {
-                    Icon(
-                        Icons.Default.ArrowDropDown,
-                        null,
-                        modifier = Modifier.size(18.dp)
-                    )
-                },
+                leadingIcon = { Icon(filter.icon, contentDescription = null, modifier = Modifier.size(16.dp)) },
+                trailingIcon = { Icon(Icons.Default.ArrowDropDown, null, modifier = Modifier.size(18.dp)) },
                 colors = FilterChipDefaults.filterChipColors(
                     containerColor = Color(0xFFF8F8F8),
                     labelColor = Color.DarkGray,

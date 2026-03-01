@@ -16,11 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.engineerstech.euphoticlabs.R
 import com.engineerstech.euphoticlabs.domain.model.DishModel
 import com.engineerstech.euphoticlabs.ui.theme.PrimaryColor
 
@@ -33,7 +35,7 @@ fun PreviouslyCookedSection(dishes: List<DishModel>) {
         ) {
             Icon(Icons.Default.History, contentDescription = null, modifier = Modifier.size(24.dp))
             Text(
-                "Previously Cooked",
+                text = stringResource(R.string.previously_cooked),
                 modifier = Modifier.padding(start = 12.dp),
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
@@ -81,14 +83,14 @@ private fun PreviouslyCookedCard(dish: DishModel) {
                     .weight(1f)
             ) {
                 Text(
-                    dish.dishName, 
+                    text = dish.dishName, 
                     fontWeight = FontWeight.Bold, 
                     fontSize = 14.sp, 
                     maxLines = 1, 
                     overflow = TextOverflow.Ellipsis
                 )
-                Text("Yesterday - 4:33 pm", fontSize = 11.sp, color = Color.Gray)
-                Text("Rate This Dish", fontSize = 11.sp, color = PrimaryColor, fontWeight = FontWeight.SemiBold)
+                Text(stringResource(R.string.yesterday_time), fontSize = 11.sp, color = Color.Gray)
+                Text(stringResource(R.string.rate_this_dish), fontSize = 11.sp, color = PrimaryColor, fontWeight = FontWeight.SemiBold)
             }
 
             Icon(

@@ -24,4 +24,7 @@
     <string name="flavour">Flavour</string>
     <string name="care_mode">Care Mode</string>
     <string name="support">Support</string>
+    <string name="network_error_title">Network Error</string>
+    <string name="retry">Retry</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

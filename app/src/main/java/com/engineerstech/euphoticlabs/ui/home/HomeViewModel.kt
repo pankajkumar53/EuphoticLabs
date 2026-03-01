@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+data class CategoryItem(val name: String, val imageUrl: String)
+
 class HomeViewModel(private val dishRepository: DishRepository) : ViewModel() {
 
     private val _allDishesState = MutableStateFlow<State<List<DishModel>>>(State.Idle)
@@ -21,7 +23,7 @@ class HomeViewModel(private val dishRepository: DishRepository) : ViewModel() {
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
 
-    private val _isDishToggleSelected = MutableStateFlow(false) // Defaulting to Ingredients as per UI requirement
+    private val _isDishToggleSelected = MutableStateFlow(false)
     val isDishToggleSelected: StateFlow<Boolean> = _isDishToggleSelected
 
     private val _selectedCategory = MutableStateFlow<String?>(null)
@@ -54,10 +56,15 @@ class HomeViewModel(private val dishRepository: DishRepository) : ViewModel() {
         _isDishToggleSelected
     ) { state, isDishSelected ->
         if (state is State.Success) {
+            val dishes = state.data
             if (isDishSelected) {
-                state.data.map { it.dishCategory }.distinct()
+                dishes.groupBy { it.dishCategory }.map { (name, list) ->
+                    CategoryItem(name, list.firstOrNull()?.imageUrl ?: "")
+                }
             } else {
-                state.data.map { it.IngredientCategory }.distinct()
+                dishes.groupBy { it.IngredientCategory }.map { (name, list) ->
+                    CategoryItem(name, list.firstOrNull()?.imageUrl ?: "")
+                }
             }
         } else {
             emptyList()
@@ -89,7 +96,7 @@ class HomeViewModel(private val dishRepository: DishRepository) : ViewModel() {
 
     fun onToggleChange(isDishSelected: Boolean) {
         _isDishToggleSelected.value = isDishSelected
-        _selectedCategory.value = null // Reset category selection when toggle changes
+        _selectedCategory.value = null
     }
 
     fun onCategorySelect(category: String) {

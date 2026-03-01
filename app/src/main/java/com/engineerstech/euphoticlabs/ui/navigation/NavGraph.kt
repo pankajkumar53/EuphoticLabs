@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,6 +25,8 @@ fun NavGraph(
     startDestination: Routes.Home
 ) {
     val navHostController = LocalNavigationProvider.current
+    val configuration = LocalConfiguration.current
+    val isTablet = configuration.screenWidthDp >= 600
 
     NavHost(
         navController = navHostController,
@@ -31,15 +34,19 @@ fun NavGraph(
         modifier = modifier
     ) {
         composable<Routes.Home> {
-            Row(modifier = Modifier.fillMaxSize()) {
-                SideBarWithScreen()
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                ) {
-                    HomeScreen()
+            if (isTablet) {
+                Row(modifier = Modifier.fillMaxSize()) {
+                    SideBarWithScreen()
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                    ) {
+                        HomeScreen()
+                    }
                 }
+            } else {
+                HomeScreen()
             }
         }
     }

@@ -4,8 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,8 +27,42 @@ fun HomeScreen() {
     val filteredDishes by homeViewModel.filteredDishes.collectAsState()
     val categories by homeViewModel.categories.collectAsState()
 
+    var showErrorDialog by remember { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         homeViewModel.getAllDishes()
+    }
+
+    LaunchedEffect(allDishesState) {
+        if (allDishesState is State.Error) {
+            showErrorDialog = true
+        }
+    }
+
+    if (showErrorDialog) {
+        AlertDialog(
+            onDismissRequest = { showErrorDialog = false },
+            title = { Text(text = stringResource(R.string.network_error_title)) },
+            text = { 
+                val message = (allDishesState as? State.Error)?.message ?: stringResource(R.string.something_went_wrong)
+                Text(text = message) 
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showErrorDialog = false
+                        homeViewModel.getAllDishes()
+                    }
+                ) {
+                    Text(text = stringResource(R.string.retry))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showErrorDialog = false }) {
+                    Text(text = stringResource(R.string.dismiss))
+                }
+            }
+        )
     }
 
     Box(
@@ -40,14 +73,6 @@ fun HomeScreen() {
         when (allDishesState) {
             is State.Loading -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-
-            is State.Error -> {
-                Text(
-                    text = (allDishesState as State.Error).message,
-                    modifier = Modifier.align(Alignment.Center),
-                    color = Color.Red
-                )
             }
 
             is State.Success -> {
@@ -65,6 +90,13 @@ fun HomeScreen() {
                 )
             }
 
+            is State.Error -> {
+                // Background state during error
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = stringResource(R.string.something_went_wrong), color = Color.Gray)
+                }
+            }
+
             else -> {}
         }
     }
@@ -74,7 +106,7 @@ fun HomeScreen() {
 fun HomeContent(
     allDishes: List<DishModel>,
     filteredDishes: List<DishModel>,
-    categories: List<String>,
+    categories: List<CategoryItem>,
     searchQuery: String,
     isDishToggleSelected: Boolean,
     selectedCategory: String?,

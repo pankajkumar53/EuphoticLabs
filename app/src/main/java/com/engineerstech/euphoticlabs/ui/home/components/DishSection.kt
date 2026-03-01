@@ -53,7 +53,7 @@ fun DishSection(
         DishLayoutType.GRID -> {
             val configuration = LocalConfiguration.current
             val screenWidth = configuration.screenWidthDp
-            val columns = if (screenWidth >= 900) 4 else if (screenWidth >= 600) 3 else 2
+            val columns = if (screenWidth >= 900) 4 else if (screenWidth >= 600) 4 else 2
 
             Column(modifier = Modifier.padding(16.dp)) {
                 dishes.chunked(columns).forEach { rowDishes ->
@@ -96,7 +96,7 @@ fun DishItemCard(dish: DishModel) {
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(180.dp)
+                        .size(120.dp)
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
@@ -107,7 +107,6 @@ fun DishItemCard(dish: DishModel) {
                     contentDescription = null,
                     tint = if (dish.isVeg) Color(0xFF4CAF50) else Color.Red,
                     modifier = Modifier
-                        .padding(8.dp)
                         .size(18.dp)
                         .align(Alignment.TopStart)
                 )
@@ -117,7 +116,6 @@ fun DishItemCard(dish: DishModel) {
                     contentDescription = null,
                     tint = Color.Gray,
                     modifier = Modifier
-                        .padding(8.dp)
                         .size(18.dp)
                         .align(Alignment.TopEnd)
                 )
@@ -141,9 +139,7 @@ fun DishItemCard(dish: DishModel) {
                             modifier = Modifier.size(12.dp)
                         )
                         Text(
-                            text = stringResource(
-                                R.string.grid_rating
-                            ),
+                            text = stringResource(R.string.grid_rating),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(start = 2.dp)
